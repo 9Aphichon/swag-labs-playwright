@@ -6,6 +6,6 @@ export const ERROR_MESSAGES = {
 };
   
 export const URL = {
-    loginPage: 'https://qa-challenge.codesubmit.io/',
-    inventoryPage: 'https://qa-challenge.codesubmit.io/inventory.html'
+    loginPage: 'https://www.saucedemo.com/',
+    inventoryPage: 'https://www.saucedemo.com/inventory.html'
 };
