@@ -1,0 +1,13 @@
+{
+  "name": "swag-labs-playwright",
+  "version": "1.0.0",
+  "description": "automate test for swag labs by playwright",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.36.1"
+  }
+}
