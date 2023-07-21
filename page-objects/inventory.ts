@@ -1,5 +1,28 @@
-class InventoryPage {
-    constructor(page){
+import { Page, Locator } from "@playwright/test";
+
+interface productList {
+    name: string;
+    price: string;
+    desc: string;
+    imgSrc: string;
+}
+
+export class InventoryPage {
+    page: Page;
+    menu_button: Locator;
+    logout_button: Locator;
+    add_to_card_sauce_labs_backpack_button: Locator;
+    add_to_cart_sauce_labs_bike_light_button: Locator;
+    add_to_cart_sauce_labs_fleece_jacket: Locator;
+    shopping_cart_button: Locator;
+    check_out_button: Locator;
+    first_name_text_field: Locator;
+    last_name_text_field: Locator;
+    postal_code_text_field: Locator;
+    continue_button: Locator;
+    finish_button: Locator;
+
+    constructor(page: Page){
         this.page = page;
         this.menu_button = page.getByRole('button', { name: 'Open Menu' });
         this.logout_button = page.getByRole('link', { name: 'Logout' });
@@ -20,8 +43,8 @@ class InventoryPage {
         this.logout_button.click();
     }
 
-    async getAllProductListInPage(){
-        const productListInPage = await this.page.$$eval('.inventory_item', (items) => {
+    async getAllProductListInPage(): Promise<productList[]>{
+        const productListInPage: productList[] = await this.page.$$eval('.inventory_item', (items) => {
             return items.map((item) => {
                 const name = item.querySelector('.inventory_item_name').textContent;
                 const price = item.querySelector('.inventory_item_price').textContent;
@@ -47,9 +70,9 @@ class InventoryPage {
         await this.page.waitForSelector('.inventory_item');
     }
 
-    async getAllProductNameInCart(){
-        const productNamesInCart = await this.page.$$eval('.cart_contents_container .cart_item .inventory_item_name', (elements) =>
-            elements.map((element) => element.innerText)
+    async getAllProductNameInCart(): Promise<string[]>{
+        const productNamesInCart: string[]= await this.page.$$eval('.cart_contents_container .cart_item .inventory_item_name', (elements) =>
+            elements.map((element) => (element as HTMLElement).innerText)
         );
         return productNamesInCart;
     }
@@ -58,8 +81,8 @@ class InventoryPage {
         await this.check_out_button.click();
     }
 
-    async getHeaderTextCheckoutInfo(){
-        const headerTextCheckoutInfo = await this.page.textContent('.title');
+    async getHeaderTextCheckoutInfo(): Promise<string>{
+        const headerTextCheckoutInfo: string = await this.page.textContent('.title');
         return headerTextCheckoutInfo;
     }
 
@@ -82,14 +105,14 @@ class InventoryPage {
         await this.continue_button.click();
     }
 
-    async getHeaderTextCheckoutOverview(){
-        const headerTextCheckoutOverview = await this.page.textContent('.title');
+    async getHeaderTextCheckoutOverview(): Promise<string>{
+        const headerTextCheckoutOverview: string = await this.page.textContent('.title');
         return headerTextCheckoutOverview;
     }
 
-    async getAllProductNamesInCheckoutOverview(){
-        const selectedProductNamesInCheckoutOverview = await this.page.$$eval('.checkout_summary_container .cart_item .inventory_item_name', (elements) =>
-            elements.map((element) => element.innerText)
+    async getAllProductNamesInCheckoutOverview(): Promise<string[]>{
+        const selectedProductNamesInCheckoutOverview: string[] = await this.page.$$eval('.checkout_summary_container .cart_item .inventory_item_name', (elements) =>
+            elements.map((element) => (element as HTMLElement).innerText)
         );
         return selectedProductNamesInCheckoutOverview;
     }
@@ -98,11 +121,9 @@ class InventoryPage {
         await this.finish_button.click();
     }
 
-    async getCompleteMessage(){
-        const completeMessage = await this.page.textContent('.complete-header');
+    async getCompleteMessage(): Promise<string>{
+        const completeMessage: string = await this.page.textContent('.complete-header');
         return completeMessage;
     }
 
 }
-
-module.exports = { InventoryPage };

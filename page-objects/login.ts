@@ -1,6 +1,14 @@
+import { Locator, Page } from '@playwright/test';
 import { URL } from '../test-data/constants';
 
-class LoginPage {
+
+export class LoginPage {
+    page: Page;
+    username_text_field: Locator;
+    password_text_field: Locator;
+    login_button: Locator;
+    error_message_text: Locator;
+
     constructor(page) {
         this.page = page;
         this.username_text_field = page.locator('[data-test="username"]');
@@ -19,7 +27,5 @@ class LoginPage {
         await this.login_button.click();
     }
 }
-
-module.exports = { LoginPage };
 
 
